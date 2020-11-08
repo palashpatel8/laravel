@@ -35,11 +35,7 @@
                         </thead>
                         <tbody>
                             @foreach($customers as $index => $customer)
-                                @if($customer->customerStatusId == 2)
-                                <tr class="red">
-                                @else
                                 <tr>
-                                @endif
                                     <td>{{ $index+1 }}</td>
                                     <td>{{ $customer->name }}</td>
                                 </tr>

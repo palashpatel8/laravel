@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>View Order Details</title>
+	<title>View Details</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="/assets/css/custom.css" rel="stylesheet">
 
 </head>
@@ -25,40 +24,28 @@
             </div>
 			<div class="row">
 				<div class="col-md-12 ">
-				    <h1>Order Details</h1>
+				    <h1>Detailed order of <?=$customerName?></h1>
 
                     <table class="table table-bordered" id="customerTable">
                         <thead>
                             <tr>
                                 <th>Sr. No</th>
-                                <th>Customer Name</th>
-                                <th>Total Amount</th>
-                                <th>Total Order</th>
-                                <th>Action</th>
+                                <th>Order Status</th>
+                                <th>Order Amount</th>
+                                <th>Order Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($customers as $index => $customer)
-                        @if($customer->customerStatusId == 2)
-                                <tr class="bg-danger text-white">
-                                @elseif(($customer->getcount($customer->customerId) == ''))
-                                <tr class="bg-warning text-dark">
-                                @elseif(($customer->getcount($customer->customerId) >= 0) && ($customer->totalamnt != 0) && ($customer->datediff > 365) && ($customer->customerStatusId == 1) )
-                                <tr class="bg-warning text-dark">
-                                @elseif(($customer->getcount($customer->customerId) >=200) && ($customer->datediff > 90) && ($customer->customerStatusId == 1))
-                                <tr class="bg-success text-white">
-                                @else
+                            
+                            @foreach($result as $index => $r)
                                 <tr>
-                                @endif
                                     <td>{{ $index+1 }}</td>
-                                    <td>{{ $customer->name }}</td>
-                                    <td>{{ $customer->getcount($customer->customerId) }}</td>
-                                    <td>{{ $customer->customerOrders }}</td>
-                                    <td>
-                                    <a href="/view-orders/{{ $customer->customerId }}" class="btn btn-outline-light"><i class="fa fa-info"></i></a>
+                                    <td>{{ $r->orderStatus }}</td>
+                                    <td>{{ $r->orderTotal }}</td>
+                                    <td><?php echo date("d/m/Y", strtotime($r->createdDateTime));?></td>
                                 </tr>
-                                
-                           @endforeach        
+                            @endforeach
+                               
                         </tbody>
                     </table>	
 				</div>
@@ -87,10 +74,9 @@
 
         $("#OrderDetails").click(function() {
         window.location.href = "/order-details";
-        });
+        });    
     });
     </script>
-
 
 </body>
 </html>

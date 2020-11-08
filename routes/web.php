@@ -15,11 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 /* get methods */
 
-Route::get('/','WelcomeController@indexPage');
+Route::get('/','OrderController@viewOder');
 Route::get('/status','CustomerStatusController@addStatus');
 Route::get('/view-status','CustomerStatusController@viewStatus');
 Route::get('/view-customer','CustomerController@viewCustomer');
 Route::get('/order-details','OrderController@viewOder');
+Route::get('/view-orders/{id}','orderController@orderByCustomer');
 
 /*post method*/
 

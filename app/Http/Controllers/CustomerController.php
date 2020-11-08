@@ -9,7 +9,8 @@ class CustomerController extends Controller
 {
     public function viewCustomer(){
 
-        $customer = Customer::all();
+        $customer = Customer::select('customer.*')
+                    ->orderBy('name','ASC')->get();
 
         return view('view-customer',['customers'=>$customer]);
     }
